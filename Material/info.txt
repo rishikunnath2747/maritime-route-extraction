@@ -4,8 +4,12 @@ Ship Use Cases
 https://ceur-ws.org/Vol-2083/paper-18.pdf
 https://www.marinetraffic.com/research/publication/mining-vessel-trajectory-data-for-patterns-of-search-and-rescue-2/
 
-2)General case study on maritime trajectory mining 
+2)General case study on maritime trajectory mining (This paper helps in understanding the problem statement in a better way and also gives different approaches)
 https://iopscience.iop.org/article/10.1088/1742-6596/1757/1/012125/pdf
+
+Dataset
+The data is compiled from the trajectory data of ships in the East China Sea (desensitized), which is the real historical ship trajectory data at sea. The data set covers information of multiple dimensions. Each trajectory data includes fishing boat ID, latitude and longitude, speed, direction, time, and operation method (including trawls, purse seines and gillnets) etc.
+https://www.kaggle.com/datasets/yccwcc/aisdata
 
 ===============================================================================================================
 
