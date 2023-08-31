@@ -1,3 +1,22 @@
+Ships
+
+Nowadays, there are
+many data sources for maritime spatial-temporal trajectory, such as Identification System (AIS), Geographic Information System (GIS) and radar et al [1]. We can acquire position and target
+information from AIS and environment information from GIS. Combine radar and other information, we can have ability to verify reliability of received maritime spatial-temporal trajectory. 
+
+GIS -> https://www.kaggle.com/datasets/siddharthkumarsah/ships-in-aerial-images
+
+AIS -> 
+https://www.kaggle.com/datasets/eminserkanerdonmez/ais-dataset
+https://www.kaggle.com/datasets/marsalanakhtar/ais-data-for-ships
+
+Overview of trajectory mining for ships -> https://iopscience.iop.org/article/10.1088/1742-6596/1757/1/012125/pdf
+
+Shortest path -> https://apps.dtic.mil/sti/pdfs/AD1046595.pdf
+
+
+===============================================================================================================
+
 Ship Use Cases
 
 1) Using trajectory mining to help in search and rescue operations 
