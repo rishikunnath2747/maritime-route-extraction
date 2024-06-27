@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Route</title>
+    <!-- Include Leaflet CSS file -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <style>
+        #loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            z-index: 9999;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Closest Route</h1>
+    
+    <div>
+        <label for="lat1">Latitude 1:</label>
+        <input type="text" id="lat1" name="lat1">
+    </div>
+    <div>
+        <label for="lon1">Longitude 1:</label>
+        <input type="text" id="lon1" name="lon1">
+    </div>
+    <div>
+        <label for="lat2">Latitude 2:</label>
+        <input type="text" id="lat2" name="lat2">
+    </div>
+    <div>
+        <label for="lon2">Longitude 2:</label>
+        <input type="text" id="lon2" name="lon2">
+    </div>
+    <div>
+        <button onclick="calculateMidpoint()">Calculate Route</button>
+    </div>
+    
+    <div id="result"></div>
+
+    <!-- Add div for Leaflet map -->
+    <div id="map" style="height: 400px;"></div>
+
+    <!-- Loading spinner -->
+    <div id="loading-spinner"></div>
+
+    <!-- Include Leaflet JavaScript file -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+    <script>
+        async function calculateMidpoint() {
+            // Show loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            const lat1 = document.getElementById('lat1').value;
+            const lon1 = document.getElementById('lon1').value;
+            const lat2 = document.getElementById('lat2').value;
+            const lon2 = document.getElementById('lon2').value;
+
+            const response = await fetch('http://localhost:3000/calculateMidpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ lat1, lon1, lat2, lon2 })
+            });
+            
+            if (response.ok) {
+                const coordinates = await response.json();
+                const map = L.map('map').setView([coordinates[0][0], coordinates[0][1]], 10, { preferCanvas: true });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                coordinates.forEach(coord => {
+                    L.circleMarker([coord[0], coord[1]], { color: 'black', radius: 2 }).addTo(map);
+                });
+
+                // Hide loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
+            } else {
+                document.getElementById('result').innerText = 'Error: Failed to calculate midpoint';
+                // Hide loading spinner
+                document.getElementById('loading-spinner').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
